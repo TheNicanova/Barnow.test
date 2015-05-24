@@ -1,0 +1,12 @@
+/* Comments on temporal mixing queue */
+/* By Nicolas Gagne | May 22 2015 */
+
+* (FILO structure) The supplier pushes packets on a stack and the consumer removes packet from the same stack; 
+  Given a very high traffic this could potentially lead to starving the packet that lies at the bottom of the stack.
+  I have used that structure because push and pop seemed to be cheap in javascript. (In contrast with moving the whole array).
+
+* The NeDB queries and deletes are done sequentially, yet I am not using callbacks to ensure the order of operations.
+  This is because once I have called the first query, I am losing access to the variables defined in the original context.
+  So far it doesn't seem to be a problem, but it's worth mentionning just in case.
+
+* There is a while loop with a a call back function being passed explicitly. This could create some extra-overhead depending on the interpreter.
